@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignID('category_id')->constrained()->onDelete('cascade');
             $table->double('price',8,2);
             $table->text('description')->nullable();
-            $table->enum('condition', ['New','Used','Good Second Hand'])->default('New');
+            $table->enum('condition', ['New','Used','good-secondhand'])->default('New');
             $table->enum('type', ['Sell','Buy','Exchange'])->default('Sell');
             $table->enum('publish', ['Yes','No'])->default('No');
             $table->string('owner_name')->nullable();

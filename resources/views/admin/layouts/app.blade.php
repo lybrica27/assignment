@@ -16,13 +16,7 @@
 		<!-- Dropzone -->
 		<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 		<!-- summernote -->
-		<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-		<!-- map picker -->
-		<!-- <link rel="stylesheet" href="{{ asset('admin-assets/plugins/leaflet-location-picker/src/leaflet-locationpicker.css') }}"> -->
-		<style>
-			#map { height: 500px; }
-		</style>
-		
+		<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">		
 
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 	</head>
@@ -109,13 +103,15 @@
 		<!-- summernote -->
 		<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 		<!-- map picker -->
-		<!-- <script src="{{ asset('admin-assets/plugins/leaflet-location-picker/src/leaflet-locationpicker.js') }}"></script> -->
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-     crossorigin=""/>
+			integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+			crossorigin=""/>
 		<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin=""></script>
+			integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+			crossorigin=""></script>
+		<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+		<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
 
 		<script type="text/javascript">
 			$.ajaxSetup({

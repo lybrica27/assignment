@@ -23,16 +23,11 @@ class TempImagesController extends Controller
 
             $image->move(public_path(). '/temp', $newName);
 
-            $itemPath = public_path(). '/temp/item/' .$newName;
-            File::copy(public_path('/temp') . '/' . $newName, $itemPath);
-
             return response()->json([
                 'status' => true,
                 'image_id' => $tempImage->id,
                 'message' => 'Image uploaded successfully!',
-                'itemPath' => asset('/temp/item/'. $newName),
             ]);
         }
     }
-    
 }

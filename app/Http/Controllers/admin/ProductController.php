@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\TempImage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 
 class ProductController extends Controller
@@ -15,8 +17,8 @@ class ProductController extends Controller
     public function index(Request $request){
         $products = Product::get();
         $data['products'] = $products;
-
-        return view('admin.product.list', $data);
+        
+        return view('admin.product.list', $data);   
     }
 
     public function create(){
@@ -54,6 +56,26 @@ class ProductController extends Controller
             $product->owner_contact = $request->owner_contact;
             $product->owner_address = $request->owner_address;
             $product->save();
+
+            if ( !empty($request->image_id)){
+                $productImageInfo = TempImage::find($request->image_id);
+                $extArray = explode('.', $productImageInfo->name);
+                $ext = last($extArray);
+
+                $productImage = new ProductImage();
+                $productImage->product_id = $product->id;
+                $productImage->image = 'NULL';
+                $productImage->save();
+
+                $imageName = $product->id . '-' . $productImage->id . '-' . time() . '.' . $ext;
+                $productImage->image = $imageName;
+                $productImage->save();
+
+                $itemPath = public_path(). '/temp/item/' . $imageName;
+                File::move(public_path('/temp') . '/' . $productImageInfo->name, $itemPath);
+                $productImageInfo->delete();
+
+            }
 
             
             $request->session()->flash('success','Added successfully');
@@ -113,7 +135,30 @@ class ProductController extends Controller
             $product->owner_address = $request->owner_address;
             $product->save();
 
-            
+
+            if ( !empty($request->image_id)){
+                $productImageInfo = TempImage::find($request->image_id);
+                $extArray = explode('.', $productImageInfo->name);
+                $ext = last($extArray);
+
+                $productImage = new ProductImage();
+                $productImage->product_id = $product->id;
+                $productImage->image = 'NULL';
+                $productImage->save();
+
+                $imageName = $product->id . '-' . $productImage->id . '-' . time() . '.' . $ext;
+                $productImage->image = $imageName;
+                $productImage->save();
+
+                $itemPath = public_path(). '/temp/item/' . $imageName;
+                File::move(public_path('/temp') . '/' . $productImageInfo->name, $itemPath);
+                $productImageInfo->delete();
+
+                $product->images()->save($productImage);
+                $product->images->except($productImage->id)->each->delete();
+
+            }
+        
             $request->session()->flash('success','Updated Successfully');
             return response()->json([
                 'status' => true,
@@ -138,6 +183,14 @@ class ProductController extends Controller
                 'notFound' => true,
             ]);
         }
+
+        $productImage = ProductImage::where('product_id',$id)->first();
+        if(!empty($productImage)){  
+            File::delete(public_path() . '/temp/item/' . $productImage->image);
+
+            $productImage->delete();
+        }
+
         $products->delete();
 
         return response()->json([

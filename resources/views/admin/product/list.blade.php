@@ -36,7 +36,7 @@
                         <tbody>
                             @if ($products->isNotEmpty())
                                 @foreach($products as $product)
-
+                                    
                                     <tr>
                                         <td class="text-center">
                                             <!-- for editing -->
@@ -55,7 +55,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $product->name }}</td>
                                         <td>{{ $product->category->name }}</td>
-                                        <td>{!! $product->description !!}</td>
+                                        <td>{!! $product->description !!}</td> 
                                         <td>${{ $product->price }}</td>
                                         <td>{{ $product->owner_name }}</td>
                                         <td class="text-center">

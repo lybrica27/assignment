@@ -24,7 +24,7 @@
                         @csrf
                         <!------------- email -------------->
                         <div class="field input-field">
-                            <input type="email" name="email" value="{{ old('email') }}" id="email" placeholder="Email" class="input form-control @error('email') is-invalid @enderror">
+                            <input type="email" name="email" value="{{ old('email') }}" id="email" placeholder="admin@gmail.com" class="input form-control @error('email') is-invalid @enderror">
                         </div>
                         @error('email')
                             <p class="invalid-feedback d-block"> {{ $message }} </p>
@@ -32,7 +32,7 @@
                         
                         <!------------- password ------------>
                         <div class="field input-field">
-                            <input type="password" name="password" id="password" placeholder="Password" class="password form-control @error('password') is-invalid @enderror">
+                            <input type="password" name="password" id="password" placeholder="admin123" class="password form-control @error('password') is-invalid @enderror">
                             <i class='bx bx-hide eye-icon'></i>
                         </div>
                         @error('password')

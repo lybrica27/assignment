@@ -132,14 +132,14 @@
                             </div>
                         </div> 
 
-                        <div id="map"></div>
+                        <div id="map" style="height: 400px;"></div>
                                                        
                     </div>
                 </div>
                 
                 <div class="pb-5 pt-3">
                     <button type="submit" class="btn btn-primary">Create</button>
-                    <a href="products.html" class="btn btn-outline-dark ml-3">Cancel</a>
+                    <a href="{{ ('products.index') }}" class="btn btn-outline-dark ml-3">Cancel</a>
                 </div>
             </div>
             <!-- /.card -->
@@ -212,19 +212,25 @@
             }
         }) 
 
+        //map picker
         var map = L.map('map').setView([16.8409, 96.1735], 13);
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
         }).addTo(map);
-        var marker = L.marker([12.84, 91.17]).addTo(map);
-        var popup = L.popup();
-        function onMapClick(e) {
-            popup
-                .setLatLng(e.latlng)
-                .setContent("You clicked the map at " + e.latlng.toString())
-                .openOn(map);
-        }
+        var marker = L.marker([51.505, -0.09], { draggable: true }).addTo(map);
+        var searchControl = L.Control.geocoder().addTo(map);
 
+        marker.on('dragend', function(event){
+        var marker = event.target;
+        var position = marker.getLatLng();
+        alert("Marker dragged to: " + position.lat + ", " + position.lng);
+        });
+
+        map.on('click', function(event){
+        marker.setLatLng(event.latlng);
+        var position = marker.getLatLng();
+        alert("Marker dragged to: " + position.lat + ", " + position.lng);
+        });
         
     </script>
 @endsection

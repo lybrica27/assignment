@@ -30,7 +30,7 @@ class AdminLoginController extends Controller
                 $admin = Auth::guard('admin')->user();
 
                 if ($admin->role == 1){
-                    return redirect()->route('admin.dashboard');
+                    return redirect()->route('products.index');
                 }else{
                     Auth::guard('admin')->logout();
                     return redirect()->route('admin.login')->with('error','Oops! You are not authorized. :) ');

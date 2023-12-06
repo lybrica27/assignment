@@ -98,7 +98,7 @@
                         </div>
                         <div class="card mb-3">
                             <div class="card-body">
-                                <input type="hidden" name="item_image" id="image_id" value="">
+                                <input type="hidden" name="image_id" id="image_id" value="">
                                 <h2 class="h4 mb-3">Item Photo</h2>								
                                 <div id="image" class="dropzone dz-clickable">
                                     <div class="dz-message needsclick">    
@@ -107,6 +107,11 @@
                                 </div>
                             </div>	                                                                      
                         </div>
+                        @if (!empty($products->images->first() ))
+                            <div>
+                                <img src="{{ asset('temp/item/' . $products->images->first()->image ) }}" width="200" height="200">
+                            </div>
+                        @endif
                         
                     </div>
                     <div class="col-md-5">
@@ -129,7 +134,7 @@
                             </div>
                         </div> 
 
-                        <div id="map"></div>
+                        <div id="map" style="height: 400px;"></div>
                                                        
                     </div>
                 </div>
@@ -210,22 +215,25 @@
             }
         }) 
 
+        //map picker
         var map = L.map('map').setView([16.8409, 96.1735], 13);
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
         }).addTo(map);
-        var marker = L.marker([12.84, 91.17]).addTo(map);
-        var popup = L.popup();
-        function onMapClick(e) {
-            popup
-                .setLatLng(e.latlng)
-                .setContent("You clicked the map at " + e.latlng.toString())
-                .openOn(map);
-        }
+        var marker = L.marker([51.505, -0.09], { draggable: true }).addTo(map);
+        var searchControl = L.Control.geocoder().addTo(map);
 
-map.on('click', onMapClick);
+        marker.on('dragend', function(event){
+        var marker = event.target;
+        var position = marker.getLatLng();
+        alert("Marker dragged to: " + position.lat + ", " + position.lng);
+        });
 
-map.on('click', onMapClick);
+        map.on('click', function(event){
+        marker.setLatLng(event.latlng);
+        var position = marker.getLatLng();
+        alert("Marker dragged to: " + position.lat + ", " + position.lng);
+        });
         
 
     </script>
